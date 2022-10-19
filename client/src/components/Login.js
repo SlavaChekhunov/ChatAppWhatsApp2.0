@@ -1,0 +1,45 @@
+import { Button } from '@mui/material';
+import React from 'react';
+import "../Styles/Login.css";
+import { auth, provider } from "../firebase";
+import { signInWithPopup, signInAnonymously } from "firebase/auth";
+
+function Login({ setUser }) {
+
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider).then((result) => {
+      console.log(result);
+      // localStorage.setItem("user", true);
+      setUser(true);
+    });
+  };
+
+  const signInAsGuest = () => {
+    signInAnonymously(auth).then((result) => {
+      console.log(result);
+      // localStorage.setItem("user", true);
+      setUser(true);
+    })
+  }
+
+
+
+    
+  return (
+    <div className="login">
+      <div className="login_container">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+          alt="whatsapp logo"
+        />
+        <div className="login_text">
+          <h1>Sing in to Whatsapp</h1>
+        </div>
+        <Button type="submit" onClick = {signInWithGoogle}>Sign in With Google</Button>
+        <Button type="submit" className="btn-login"onClick = {signInAsGuest}>Sign As Guest</Button>
+      </div>
+    </div>
+  );
+}
+
+export default Login
