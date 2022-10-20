@@ -4,8 +4,56 @@ import SearchOutlinedIcon from "@mui/icons-material/Search";
 import { IconButton, Avatar } from "@mui/material";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import MicIcon from "@mui/icons-material/Mic";
+import React, { useEffect, useState } from "react";
+import ScrollToBottom from "react-scroll-to-bottom";
+import { auth} from "../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
-function Chat() {
+function Chat({ socket, room }) {
+   const [user] = useAuthState(auth);
+  const [currentMessage, setCurrentMessage] = useState("");
+  const [messageList, setMessageList] = useState([]);
+
+  const sendMessage = async () => {
+    if (currentMessage !== "") {
+      const messageData = {
+        room: room,
+        author: user.displayName,
+        message: currentMessage,
+        time: Date.now(),
+      };
+
+      await socket.emit("send_message", messageData);
+      setMessageList((list) => [...list, messageData]);
+      setCurrentMessage("");
+    }
+  };
+
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+      console.log(data);
+      setMessageList((list) => [...list, data]);
+    });
+
+    return () => socket.off("receive_message");
+  }, [socket]);
+
+  useEffect(() => {
+    // Last 100 messages sent in the chat room (fetched from the db in backend)
+    socket.on("last_100_messages", (last100Messages) => {
+      console.log("Last 100 messages:", JSON.parse(last100Messages));
+      last100Messages = JSON.parse(last100Messages);
+      setMessageList((list) => [...last100Messages, ...list]);
+    });
+
+    return () => socket.off("last_100_messages");
+  }, [socket]);
+
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleString();
+  };
+
 
   return (
     <div className="chat">
@@ -28,13 +76,43 @@ function Chat() {
         </div>
       </div>
 
-      <div className="chat_body"></div>
+      <div className="chat_body">
+        <ScrollToBottom className="message-container">
+          {messageList.map((messageContent, i) => {
+            return (
+              <div
+                className="message"
+                id={user === messageContent.author ? "you" : "other"}
+                key={i}
+              >
+                <div>
+                  <div className="message-content">
+                    <p>{messageContent.message}</p>
+                  </div>
+                  <div className="message-meta">
+                    <p id="time">{formatDate(messageContent.time)}</p>
+                    <p id="author">{messageContent.author}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </ScrollToBottom>
+      </div>
 
       <div className="chat_footer">
-        <form>
-          <input type="text" placeholder="Type a message" />
-          <button type="submit"> Send a message</button>
-        </form>
+        <input
+          type="text"
+          value={currentMessage}
+          placeholder="Hey..."
+          onChange={(event) => {
+            setCurrentMessage(event.target.value);
+          }}
+          onKeyPress={(event) => {
+            event.key === "Enter" && sendMessage();
+          }}
+        />
+        <button onClick={sendMessage}>&#9658;</button>
         <MicIcon />
       </div>
     </div>

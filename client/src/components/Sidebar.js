@@ -9,10 +9,10 @@ import SidebarChat from "./SidebarChat";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth"
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 function Sidebar() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [user] = useAuthState(auth);
 
   const signUserOut = async () => {
