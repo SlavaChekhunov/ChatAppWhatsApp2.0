@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
 import { auth} from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import TimeAgo from "timeago-react";
 
 function Chat({ socket, room }) {
    const [user] = useAuthState(auth);
@@ -60,8 +61,11 @@ function Chat({ socket, room }) {
       <div className="chat_header">
         <Avatar />
         <div className="chat_headerInfo">
-          <h3>Room Name</h3>
-          <p>Last seen at...</p>
+          <h3>{room} room</h3>
+          <p>
+            Last active{' '}
+            {new Date().toLocaleString()}
+          </p>
         </div>
         <div className="chat_headerRight">
           <IconButton>
@@ -82,7 +86,7 @@ function Chat({ socket, room }) {
             return (
               <div
                 className="message"
-                id={user === messageContent.author ? "you" : "other"}
+                id={user.displayName === messageContent.author? "you" : "other"}
                 key={i}
               >
                 <div>
@@ -91,7 +95,7 @@ function Chat({ socket, room }) {
                   </div>
                   <div className="message-meta">
                     <p id="time">{formatDate(messageContent.time)}</p>
-                    <p id="author">{messageContent.author}</p>
+                    <p id="author">{messageContent.author || "Guest User"}</p>
                   </div>
                 </div>
               </div>

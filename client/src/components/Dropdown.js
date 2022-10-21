@@ -20,10 +20,10 @@ function Dropdown({ room, setRoom, socket, setUser }) {
 
       <select className="input" onChange={(e) => setRoom(e.target.value)}>
         <option>-- Select Room --</option>
-        <option value="general">General</option>
-        <option value="developers">Developers</option>
-        <option value="cat">Cat Lovers</option>
-        <option value="dog">Dog Lovers</option>
+        <option value="General">General</option>
+        <option value="Developers">Developers</option>
+        <option value="Cat Lovers">Cat Lovers</option>
+        <option value="Dog Lovers">Dog Lovers</option>
       </select>
 
       <Button onClick={joinRoom}>Join Room</Button>

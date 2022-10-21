@@ -20,16 +20,13 @@ function Login({ setUser }) {
 
   const signInAsGuest = () => {
     signInAnonymously(auth).then((result) => {
-      console.log(result.user.displayName);
+      console.log(result);
       localStorage.setItem("user", true);
       setUser(true);
     })
 
     navigate("/dropdown", { replace: true });
   }
-
-
-
     
   return (
     <div className="login">
