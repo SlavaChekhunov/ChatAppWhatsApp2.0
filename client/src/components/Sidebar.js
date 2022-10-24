@@ -9,16 +9,22 @@ import SidebarChat from "./SidebarChat";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth"
 import { useAuthState } from "react-firebase-hooks/auth";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function Sidebar() {
-  // const navigate = useNavigate();
+function Sidebar({socket, room, time, username}) {
+  const navigate = useNavigate();
   const [user] = useAuthState(auth);
 
   const signUserOut = async () => {
     await signOut(auth);
-    // navigate('/Login')
+    navigate('/')
   }
+
+  const leaveRoom = () => {
+    const time = Date.now();
+    socket.emit("leave_room", { username, room, time });
+    navigate("/dropdown", );
+  };
 
   return (
     <div className="sidebar">
@@ -39,16 +45,14 @@ function Sidebar() {
       <div className="sidebar_search">
         <div className="sidebar_searchContainer">
           <SearchOutlinedIcon />
-          <input placeholder="Search or start new chat" type="text" />
+          <input placeholder="Search for a user" type="text" />
         </div>
       </div>
       <div className="sidebar_chats">
         <SidebarChat />
-        <SidebarChat />
-        <SidebarChat />
-        <SidebarChat />
-      </div>
       <Button onClick={signUserOut}>Log Out</Button>
+      <Button onClick={leaveRoom}>Leave Room</Button>
+      </div>
     </div>
   );
 }

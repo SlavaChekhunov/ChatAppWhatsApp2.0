@@ -27,7 +27,8 @@
 .sidebar_search {
     display: flex;
     align-items: center;
-    background-color: #f6f6f6;
+    /* background-color: #f6f6f6; */
+    border-right: 1px solid lightgrey;
     height: 39px;
     padding: 10px;
 }
@@ -49,14 +50,25 @@
 .sidebar_searchContainer > input {
     border: none;
     outline-style: none;
-    /* to remove the annoying border on click you can do outline-with: 0 or this */
     margin-left: 10px;
 }
 
 .sidebar_chats {
     flex: 1;
     background-color: white;
-    overflow: scroll;
+}
+
+.sidebar_chats > button {
+     margin-top: 500px;
+    margin-left: 35px;
+    text-transform: inherit !important;
+    background-color: #43a047 !important;
+    color: white;
+    cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.25);
+  font-size: 18px;
 }
 
 

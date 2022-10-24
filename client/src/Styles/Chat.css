@@ -5,10 +5,9 @@
 }
 
 .chat_header {
-    padding: 20px;
+    padding: 20.5px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid lightgrey;
 }
 
 .chat_headerInfo {
@@ -25,12 +24,18 @@
     color: grey;
 }
 
-.chat_body {
+.chat-body {
     flex: 1;
     background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");
     background-repeat: repeat;
     background-position: center;
-    padding: 30px;
+    overflow-x: hidden;
+}
+
+.message-container {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
 }
 
 .chat_footer {
@@ -58,9 +63,7 @@
     color: gray;
 }
 
-.message-container {
-  width: 100%;
-  height: 100%;
+ .chat_body .message-container {
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -68,6 +71,7 @@
  .message-container::-webkit-scrollbar {
   display: none;
 }
+
 .message {
   height: auto;
   padding: 10px;

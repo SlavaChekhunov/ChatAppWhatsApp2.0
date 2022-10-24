@@ -3,7 +3,7 @@ import React from 'react'
 import '../Styles/Dropdown.css'
 import { useNavigate } from "react-router-dom";
 
-function Dropdown({ room, setRoom, socket, setUser }) {
+function Dropdown({ room, setRoom, socket }) {
   const navigate = useNavigate();
 
   const joinRoom = () => {

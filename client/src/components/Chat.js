@@ -8,7 +8,7 @@ import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
 import { auth} from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import TimeAgo from "timeago-react";
+import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 
 function Chat({ socket, room }) {
    const [user] = useAuthState(auth);
@@ -62,10 +62,7 @@ function Chat({ socket, room }) {
         <Avatar />
         <div className="chat_headerInfo">
           <h3>{room} room</h3>
-          <p>
-            Last active{' '}
-            {new Date().toLocaleString()}
-          </p>
+          <p>Last active {new Date().toLocaleString()}</p>
         </div>
         <div className="chat_headerRight">
           <IconButton>
@@ -80,13 +77,15 @@ function Chat({ socket, room }) {
         </div>
       </div>
 
-      <div className="chat_body">
+      <div className="chat-body">
         <ScrollToBottom className="message-container">
           {messageList.map((messageContent, i) => {
             return (
               <div
                 className="message"
-                id={user.displayName === messageContent.author? "you" : "other"}
+                id={
+                  user.displayName === messageContent.author ? "you" : "other"
+                }
                 key={i}
               >
                 <div>
@@ -105,6 +104,7 @@ function Chat({ socket, room }) {
       </div>
 
       <div className="chat_footer">
+        <InsertEmoticonIcon />
         <input
           type="text"
           value={currentMessage}

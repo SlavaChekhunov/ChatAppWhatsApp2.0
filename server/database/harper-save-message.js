@@ -21,10 +21,10 @@ function harperSaveMessage(message, author, room, time) {
 
   var config = {
     method: "post",
-    url: "https://cloud-1-slavachekhunov.harperdbcloud.com",
+    url: dbUrl,
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Basic c2xhdmE6SGFpcnl+R29yaWxsYV8xOTk3",
+      Authorization: `Basic ${dbPw}`,
     },
     data: data,
   };
