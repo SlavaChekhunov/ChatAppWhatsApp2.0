@@ -17,9 +17,6 @@ const io = new Server(server, {
   },
 });
 
-let chatRoom = ""; 
-let allUsers = [];
-
 //we are listening to the event with this id.
 io.on("connection", (socket) => {
   console.log(`User connected: ${socket.id}`);

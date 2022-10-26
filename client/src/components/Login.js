@@ -8,14 +8,14 @@ import { useNavigate } from "react-router-dom";
 function Login({ setUser }) {
   const navigate = useNavigate();
 
-  const signInWithGoogle = () => {
+  const signInWithGoogle = (user) => {
     signInWithPopup(auth, provider).then((result) => {
       console.log(result.user.displayName);
       localStorage.setItem("user", true);
       setUser(true);
     });
-
-    navigate("/dropdown", { replace: true });
+    
+      navigate("/dropdown", { replace: true });
   };
 
   const signInAsGuest = () => {

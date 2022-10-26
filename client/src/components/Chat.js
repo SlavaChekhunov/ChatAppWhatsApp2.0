@@ -32,7 +32,6 @@ function Chat({ socket, room }) {
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
-      console.log(data);
       setMessageList((list) => [...list, data]);
     });
 
@@ -42,7 +41,6 @@ function Chat({ socket, room }) {
   useEffect(() => {
     // Last 100 messages sent in the chat room (fetched from the db in backend)
     socket.on("last_100_messages", (last100Messages) => {
-      console.log("Last 100 messages:", JSON.parse(last100Messages));
       last100Messages = JSON.parse(last100Messages);
       setMessageList((list) => [...last100Messages, ...list]);
     });
@@ -79,14 +77,13 @@ function Chat({ socket, room }) {
 
       <div className="chat-body">
         <ScrollToBottom className="message-container">
-          {messageList.map((messageContent, i) => {
+          {messageList.map((messageContent) => {
             return (
               <div
                 className="message"
                 id={
                   user.displayName === messageContent.author ? "you" : "other"
                 }
-                key={i}
               >
                 <div>
                   <div className="message-content">

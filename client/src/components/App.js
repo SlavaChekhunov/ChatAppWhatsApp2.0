@@ -4,7 +4,7 @@ import Dropdown from "./Dropdown";
 import Chat from "./Chat";
 import { useState } from "react";
 import Login from "./Login";
-import { Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import io from "socket.io-client";
 
 const socket = io.connect("http://localhost:3001");
